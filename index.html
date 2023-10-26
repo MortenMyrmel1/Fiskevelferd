@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <title>Fiskevelferd Prosjekt</title>
+    <link rel="stylesheet" type="text/css" href="style.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+
+<body>
+    <header>
+        <h1>Overvåkning av laksens velferd i oppdrettsannlegg</h1>
+    </header>
+    <main>
+        <section id="fish-images">
+            <h2>Lusanalyse</h2>
+            <a href="Lusanalyse.html" target="_blank">Klikk her for mer informasjon om Lus!</a>
+            <div id="image-gallery">
+                <img id="laks" src="gladlaks.jpg" alt="blide av laks">
+            </div>
+        </section>
+
+        <section id="speed-measurements">
+            <h2>Hastighetsmålinger</h2>
+
+            <a href="Hastighetsmålinger.html" target="_blank">Klikk her for mer informasjon om farten til laksen!</a>
+
+            <div id="tekst">
+                <h3>Hvorfor det er viktig å måle hastigheten til fisk:</h3>
+                <p>
+                    1. Helse og velferd av fisken: Måling av fiskens hastighet gir en indikasjon på helsen
+                    og det generelle trivselet til fisken. Endringer i hastigheten kan indikere stress,
+                    sykdom eller andre helseproblemer. Sunne fisker vil vanligvis ha jevn og stabil 
+                    svømmehastighet.
+                </p>
+                <p>
+                    2. Miljøforhold: Hastighetsmålinger kan også brukes til å overvåke 
+                    miljøforhold i merden, for eksempel vanntemperatur, strømforhold og oksygennivå. 
+                    Endringer i hastighet kan indikere fiskens respons på disse faktorene.
+                </p>
+                <p>
+                    3. Fôring og vekst: Hastighetsmålinger kan bidra til å evaluere fôringsstrategier. 
+                    Hvis fiskene viser redusert appetitt og hastighet, kan det være nødvendig å 
+                    tilpasse fôringsmengden. Samtidig kan hastighet brukes som en indikator for 
+                    vekstraten til fisken.
+                </p>
+                <p>
+                    4. Adferd og stressnivå: Fisk som er under stress, for eksempel
+                    fra høye tettheter eller parasitter, kan vise endringer i svømmehastigheten. 
+                    Overvåking av hastigheten kan bidra til å identifisere stressende forhold og 
+                    iverksette tiltak for å redusere dem.
+                </p>
+            </div>
+
+            <div id="speed-plot">
+                <canvas id="graph2" width="400" height="200"></canvas>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <p> &copy; 2023 Fiskevelferd Prosjekt</p>
+        <p> TTT4255 Elektronisk systemdesign grunnkurs 2023</p>
+        <p> Gruppe 1</p>
+    </footer>
+
+    <script src="https://www.gstatic.com/firebasejs/8.6.2/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.6.2/firebase-firestore.js"></script>
+    <script src="script.js"></script>
+</body>
+
+</html>
