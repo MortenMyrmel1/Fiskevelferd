@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Hastighetsmålinger</title>
+    <link rel="stylesheet" type="text/css" href="style2.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Hastighetsmålinger</h1>
+        </header>
+        <section class="graph-section">
+            <div class="graph">
+                <h2>Blå fisk sin fart</h2>
+                <canvas id="graph1" width="800" height="400"></canvas>
+            </div>
+            <div class="graph">
+                <h2>Rød fisk sin fart</h2>
+                <canvas id="graph2" width="800" height="400"></canvas>
+            </div>
+        </section>
+        <p><a href="Fiskevelferd.html">Tilbake til hovedsiden</a></p>
+    </div>
+    <script src="https://www.gstatic.com/firebasejs/8.6.2/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.6.2/firebase-firestore.js"></script>
+    <script src="script.js"></script>
+</body>
+</html>
+
