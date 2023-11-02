@@ -1,9 +1,8 @@
-#speed-measurements {
+section {
     display: grid;
     grid-template-columns: 1fr 1fr; /* Del beholderen i to like store kolonner */
     grid-gap: 10px; /* Legg til en passende margintilpasning mellom kolonnene */
 }
-
 
 body {
     font-family: 'Roboto', Arial, sans-serif;
@@ -18,7 +17,11 @@ header {
     padding: 20px;
 }
 
-
+a{
+    margin: auto;
+    width: 50%;
+    text-align: center;
+}
 
 main {
     max-width: 1200px;
@@ -40,4 +43,6 @@ h2 {
     margin-top: 20px;
 }
 
-
+footer{
+    padding-left: 20px;
+}
