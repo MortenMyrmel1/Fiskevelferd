@@ -16,7 +16,7 @@ firebase.initializeApp(firebaseConfig);
 const db = firebase.firestore();
 
 // Hent Firestore-dokumentet som inneholder array-data
-const docRef = db.collection("Svømmemønster").doc("fart2");
+const docRef = db.collection("Svømmemønster").doc("fart0");
 
 // Hent data fra Firestore-dokumentet
 docRef.get().then((doc) => {
