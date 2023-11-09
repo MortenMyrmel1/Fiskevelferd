@@ -17,6 +17,9 @@ const db = firebase.firestore();
 
 // Hent Firestore-dokumentet som inneholder array-data
 const docRef = db.collection("Svømmemønster").doc("fart0");
+const docRef2 = db.collection("Lus_data").doc("lus_status0");
+
+
 
 // Hent data fra Firestore-dokumentet
 docRef.get().then((doc) => {
@@ -118,6 +121,68 @@ docRef.get().then((doc) => {
     } else {
         console.log("Dokumentet eksisterer ikke.");
     }
+
+}).catch((error) => {
+    console.error("Feil ved henting av dokument:", error);
+});
+
+// Hent data fra Firestore-dokumentet
+docRef2.get().then((docu) => {
+    if (docu.exists) {
+        const data2 = docu.data();
+
+        // Funksjoner for å hente data fra arrayer
+        const array5 = data2.lus_status;
+        const array6 = data2.lus_tid;
+
+        // Opprett canvas-elementer
+        const graph3Canvas = document.getElementById("graph3");
+
+        // Opprett grafer
+        const graph3 = new Chart(graph3Canvas, {
+            type: 'line',
+            data: {
+                labels: array6.map((value, index) => (value).toFixed(2) + "s"), // Konverter til sekunder og legg til "s" for tidsenheter
+                datasets: [{
+                    label: 'Antall lus',
+                    data: array5,
+                    borderColor: 'blue',
+                    fill: false,
+                }],
+            },
+            options: {
+                scales: {
+                    x: [{
+                        scaleLabel: {
+                            display: true,
+                            labelString: 'Tid (s)', // Change to 'Tid (s)'
+                        },
+                    }],
+                    y: [{
+                        scaleLabel: {
+                            display: true,
+                            labelString: 'lus', 
+                        },
+                    }],
+                },                
+                legend: {
+                    display: true,
+                },
+                elements: {
+                    point: {
+                        radius: 0,
+                    },
+                },
+                tooltips: {
+                    mode: 'index',
+                    intersect: false,
+                },
+            },
+        });                                   
+    } else {
+        console.log("Dokumentet eksisterer ikke.");
+    }
+
 }).catch((error) => {
     console.error("Feil ved henting av dokument:", error);
 });
