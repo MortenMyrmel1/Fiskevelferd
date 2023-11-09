@@ -1,11 +1,28 @@
 <!DOCTYPE html>
-<html lang="no">
+<html>
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Lusanalyse</title>
+    <title>Lus</title>
+    <link rel="stylesheet" type="text/css" href="style2.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
 <body>
-    <p>yo lus</p>
+    <div class="container">
+        <header>
+            <h1>Antall Lus i fisken</h1>
+        </header>
+        <section class="graph-section">
+            <div class="graph">
+                <h2>Lus i tanken</h2>
+                <canvas id="graph3" width="800" height="400"></canvas>
+            </div>
+        </section>
+        <div id="tilbake">
+            <a href="index.html" id="link"><p>Tilbake til hovedsiden</p></a>
+        </div>
+    </div>
+    <script src="https://www.gstatic.com/firebasejs/8.6.2/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.6.2/firebase-firestore.js"></script>
+    <script src="script.js"></script>
 </body>
 </html>
+
