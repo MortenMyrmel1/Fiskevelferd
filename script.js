@@ -20,7 +20,6 @@ const docRef = db.collection("Svømmemønster").doc("fart0");
 const docRef2 = db.collection("Lus_data").doc("lus_status0");
 
 
-
 // Hent data fra Firestore-dokumentet
 docRef.get().then((doc) => {
     if (doc.exists) {
@@ -42,7 +41,7 @@ docRef.get().then((doc) => {
             data: {
                 labels: array2.map((value, index) => (value).toFixed(2) + "s"), // Konverter til sekunder og legg til "s" for tidsenheter
                 datasets: [{
-                    label: 'Blå laks sin fart (pixels/sekund)', // Legg til enhet
+                    label: 'Blå laks sin fart (pixels/sekund)', 
                     data: array1,
                     borderColor: 'blue',
                     fill: false,
@@ -135,6 +134,12 @@ docRef2.get().then((docu) => {
         const array5 = data2.lus_status;
         const array6 = data2.lus_tid;
 
+        // Sjekk om antall lus er 1 og vis en varsling
+        if (array5.length > 0 && array5[array5.length - 1] === 1) {
+            // Her kan du bruke JavaScript til å vise en varsling, for eksempel med "alert" eller ved å opprette en egen meldingsdiv.
+            alert("Varsling: Det er 1 lus i tanken!");
+        }
+        
         // Opprett canvas-elementer
         const graph3Canvas = document.getElementById("graph3");
 
@@ -144,7 +149,7 @@ docRef2.get().then((docu) => {
             data: {
                 labels: array6.map((value, index) => (value).toFixed(2) + "s"), // Konverter til sekunder og legg til "s" for tidsenheter
                 datasets: [{
-                    label: 'Antall lus',
+                    label: 'Lus',
                     data: array5,
                     borderColor: 'blue',
                     fill: false,
@@ -186,3 +191,4 @@ docRef2.get().then((docu) => {
 }).catch((error) => {
     console.error("Feil ved henting av dokument:", error);
 });
+
