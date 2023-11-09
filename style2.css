@@ -39,3 +39,22 @@ canvas {
     border: 1px solid #ccc;
     border-radius: 5px;
 }
+
+#tilbake{
+    color: #110c00;
+    font-size: 1.5vw;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+}
+
+#link:hover{
+    background-color: burlywood;
+}
+
+#link{
+    border:1px solid black;
+    text-decoration: none;
+}
