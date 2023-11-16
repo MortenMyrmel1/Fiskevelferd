@@ -15,7 +15,7 @@ firebase.initializeApp(firebaseConfig);
 // Hent Firestore-database
 const db = firebase.firestore();
 
-// Hent Firestore-dokumentet som inneholder array-data for svømmemønster
+// Hent Firestore-dokumentet som inneholder array-data 
 const docRef = db.collection("Svømmemønster").doc("fart0");
 const docRef2 = db.collection("Lus_data").doc("lus_status0");
 
@@ -31,9 +31,9 @@ docRef.get().then((doc) => {
     const array4 = data.redTime;
 
     // Plot swimming pattern graphs
-    const graph1Canvas = document.getElementById("graph1");
     const graph2Canvas = document.getElementById("graph2");
 
+    const graph1Canvas = document.getElementById("graph1");
     const graph1 = new Chart(graph1Canvas, {
       type: 'line',
       data: {
@@ -45,9 +45,6 @@ docRef.get().then((doc) => {
           fill: false,
         }],
       },
-      options: {
-        // ... rest of the options
-      },
     });
 
     const graph2 = new Chart(graph2Canvas, {
@@ -55,14 +52,11 @@ docRef.get().then((doc) => {
       data: {
         labels: array4.map((value, index) => (value).toFixed(2) + "s"),
         datasets: [{
-          label: 'Rød fisk sin fart (pixels/sekund)',
+          label: 'Rød laks sin fart (pixels/sekund)',
           data: array3,
           borderColor: 'red',
           fill: false,
         }],
-      },
-      options: {
-        // ... rest of the options
       },
     });
   } else {
@@ -72,7 +66,7 @@ docRef.get().then((doc) => {
   console.error("Feil ved henting av dokument:", error);
 });
 
-// Combine lus_data documents and plot the graph
+
 let combinedLusStatus = [];
 let combinedLusTime = [];
 
@@ -93,7 +87,7 @@ for (let i = 0; i < 4; i++) {
           data: {
             labels: combinedLusTime.map((value, index) => (value).toFixed(2) + "s"),
             datasets: [{
-              label: 'Combined Lus Data',
+              label: 'Antall Lus',
               data: combinedLusStatus,
               borderColor: 'green',
               fill: false,
@@ -136,3 +130,4 @@ for (let i = 0; i < 4; i++) {
     console.error(`Error fetching document lus_status${i}:`, error);
   });
 }
+
