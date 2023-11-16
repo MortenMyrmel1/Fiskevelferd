@@ -1,13 +1,13 @@
 // Your web app's Firebase configuration
 const firebaseConfig = {
-    apiKey: "AIzaSyCsBAKwiSSY9-tsFRPbW1lY4EuGPG2qmE4",
-    authDomain: "fiskevelferd.firebaseapp.com",
-    projectId: "fiskevelferd",
-    storageBucket: "fiskevelferd.appspot.com",
-    messagingSenderId: "403055230728",
-    appId: "1:403055230728:web:419b6ab21bba9feba7b6bd",
-    measurementId: "G-ME4HX45M23"
-  };
+  apiKey: "AIzaSyCsBAKwiSSY9-tsFRPbW1lY4EuGPG2qmE4",
+  authDomain: "fiskevelferd.firebaseapp.com",
+  projectId: "fiskevelferd",
+  storageBucket: "fiskevelferd.appspot.com",
+  messagingSenderId: "403055230728",
+  appId: "1:403055230728:web:419b6ab21bba9feba7b6bd",
+  measurementId: "G-ME4HX45M23"
+};
 
 // Initialize Firebase
 firebase.initializeApp(firebaseConfig);
@@ -15,180 +15,124 @@ firebase.initializeApp(firebaseConfig);
 // Hent Firestore-database
 const db = firebase.firestore();
 
-// Hent Firestore-dokumentet som inneholder array-data
+// Hent Firestore-dokumentet som inneholder array-data for svømmemønster
 const docRef = db.collection("Svømmemønster").doc("fart0");
 const docRef2 = db.collection("Lus_data").doc("lus_status0");
 
-
-// Hent data fra Firestore-dokumentet
+// Fetch swimming pattern data
 docRef.get().then((doc) => {
+  if (doc.exists) {
+    const data = doc.data();
+
+    // Extract data from arrays
+    const array1 = data.blueFish;
+    const array2 = data.blueTime;
+    const array3 = data.redFish;
+    const array4 = data.redTime;
+
+    // Plot swimming pattern graphs
+    const graph1Canvas = document.getElementById("graph1");
+    const graph2Canvas = document.getElementById("graph2");
+
+    const graph1 = new Chart(graph1Canvas, {
+      type: 'line',
+      data: {
+        labels: array2.map((value, index) => (value).toFixed(2) + "s"),
+        datasets: [{
+          label: 'Blå laks sin fart (pixels/sekund)',
+          data: array1,
+          borderColor: 'blue',
+          fill: false,
+        }],
+      },
+      options: {
+        // ... rest of the options
+      },
+    });
+
+    const graph2 = new Chart(graph2Canvas, {
+      type: 'line',
+      data: {
+        labels: array4.map((value, index) => (value).toFixed(2) + "s"),
+        datasets: [{
+          label: 'Rød fisk sin fart (pixels/sekund)',
+          data: array3,
+          borderColor: 'red',
+          fill: false,
+        }],
+      },
+      options: {
+        // ... rest of the options
+      },
+    });
+  } else {
+    console.log("Dokumentet eksisterer ikke.");
+  }
+}).catch((error) => {
+  console.error("Feil ved henting av dokument:", error);
+});
+
+// Combine lus_data documents and plot the graph
+let combinedLusStatus = [];
+let combinedLusTime = [];
+
+for (let i = 0; i < 4; i++) {
+  const docRef = db.collection("Lus_data").doc(`lus_status${i}`);
+
+  docRef.get().then((doc) => {
     if (doc.exists) {
-        const data = doc.data();
+      const data = doc.data();
+      combinedLusStatus = combinedLusStatus.concat(data.lus_status);
+      combinedLusTime = combinedLusTime.concat(data.lus_tid);
 
-        // Funksjoner for å hente data fra arrayer
-        const array1 = data.blueFish;
-        const array2 = data.blueTime;
-        const array3 = data.redFish;
-        const array4 = data.redTime;
+      if (i === 3) {
+        const graphCombinedCanvas = document.getElementById("graphCombined");
 
-        // Opprett canvas-elementer
-        const graph1Canvas = document.getElementById("graph1");
-        const graph2Canvas = document.getElementById("graph2");
-
-        // Opprett grafer
-        const graph1 = new Chart(graph1Canvas, {
-            type: 'line',
-            data: {
-                labels: array2.map((value, index) => (value).toFixed(2) + "s"), // Konverter til sekunder og legg til "s" for tidsenheter
-                datasets: [{
-                    label: 'Blå laks sin fart (pixels/sekund)', 
-                    data: array1,
-                    borderColor: 'blue',
-                    fill: false,
-                }],
+        const graphCombined = new Chart(graphCombinedCanvas, {
+          type: 'line',
+          data: {
+            labels: combinedLusTime.map((value, index) => (value).toFixed(2) + "s"),
+            datasets: [{
+              label: 'Combined Lus Data',
+              data: combinedLusStatus,
+              borderColor: 'green',
+              fill: false,
+            }],
+          },
+          options: {
+            scales: {
+              x: [{
+                scaleLabel: {
+                  display: true,
+                  labelString: 'Tid (s)',
+                },
+              }],
+              y: [{
+                scaleLabel: {
+                  display: true,
+                  labelString: 'Lus',
+                },
+              }],
             },
-            options: {
-                scales: {
-                    x: [{
-                        scaleLabel: {
-                            display: true,
-                            labelString: 'Tid (s)', // Change to 'Tid (s)'
-                        },
-                    }],
-                    y: [{
-                        scaleLabel: {
-                            display: true,
-                            labelString: 'Fart (piksler/s)', // Change to 'Fart (piksler/s)'
-                        },
-                    }],
-                },                
-                legend: {
-                    display: true,
-                },
-                elements: {
-                    point: {
-                        radius: 0,
-                    },
-                },
-                tooltips: {
-                    mode: 'index',
-                    intersect: false,
-                },
+            legend: {
+              display: true,
             },
+            elements: {
+              point: {
+                radius: 0,
+              },
+            },
+            tooltips: {
+              mode: 'index',
+              intersect: false,
+            },
+          },
         });
-        
-        const graph2 = new Chart(graph2Canvas, {
-            type: 'line',
-            data: {
-                labels: array4.map((value, index) => (value).toFixed(2) + "s"), // Konverter til sekunder
-                datasets: [{
-                    label: 'Rød fisk sin fart (pixels/sekund)',
-                    data: array3,
-                    borderColor: 'red',
-                    fill: false,
-                }],
-            },
-            options: {
-                scales: {
-                    x: [{
-                        scaleLabel: {
-                            display: true,
-                            labelString: 'Tid (s)', // Change to 'Tid (s)'
-                        },
-                    }],
-                    y: [{
-                        scaleLabel: {
-                            display: true,
-                            labelString: 'Fart (piksler/s)', // Change to 'Fart (piksler/s)'
-                        },
-                    }],
-                },                
-                legend: {
-                    display: true,
-                },
-                elements: {
-                    point: {
-                        radius: 0,
-                    },
-                },
-                tooltips: {
-                    mode: 'index',
-                    intersect: false,
-                },
-            },
-        });                                        
+      }
     } else {
-        console.log("Dokumentet eksisterer ikke.");
+      console.log(`Document lus_status${i} does not exist.`);
     }
-
-}).catch((error) => {
-    console.error("Feil ved henting av dokument:", error);
-});
-
-// Hent data fra Firestore-dokumentet
-docRef2.get().then((docu) => {
-    if (docu.exists) {
-        const data2 = docu.data();
-
-        // Funksjoner for å hente data fra arrayer
-        const array5 = data2.lus_status;
-        const array6 = data2.lus_tid;
-
-        // Sjekk om antall lus er 1 og vis en varsling
-        if (array5.length > 0 && array5[array5.length - 1] === 1) {
-            // Her kan du bruke JavaScript til å vise en varsling, for eksempel med "alert" eller ved å opprette en egen meldingsdiv.
-            alert("Varsling: Det er 1 lus i tanken!");
-        }
-        
-        // Opprett canvas-elementer
-        const graph3Canvas = document.getElementById("graph3");
-
-        // Opprett grafer
-        const graph3 = new Chart(graph3Canvas, {
-            type: 'line',
-            data: {
-                labels: array6.map((value, index) => (value).toFixed(2) + "s"), // Konverter til sekunder og legg til "s" for tidsenheter
-                datasets: [{
-                    label: 'Lus',
-                    data: array5,
-                    borderColor: 'blue',
-                    fill: false,
-                }],
-            },
-            options: {
-                scales: {
-                    x: [{
-                        scaleLabel: {
-                            display: true,
-                            labelString: 'Tid (s)', // Change to 'Tid (s)'
-                        },
-                    }],
-                    y: [{
-                        scaleLabel: {
-                            display: true,
-                            labelString: 'lus', 
-                        },
-                    }],
-                },                
-                legend: {
-                    display: true,
-                },
-                elements: {
-                    point: {
-                        radius: 0,
-                    },
-                },
-                tooltips: {
-                    mode: 'index',
-                    intersect: false,
-                },
-            },
-        });                                   
-    } else {
-        console.log("Dokumentet eksisterer ikke.");
-    }
-
-}).catch((error) => {
-    console.error("Feil ved henting av dokument:", error);
-});
-
+  }).catch((error) => {
+    console.error(`Error fetching document lus_status${i}:`, error);
+  });
+}
