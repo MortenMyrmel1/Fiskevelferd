@@ -82,6 +82,13 @@ for (let i = 0; i < 4; i++) {
       if (i === 3) {
         const graphCombinedCanvas = document.getElementById("graphCombined");
 
+        const hasLice = combinedLusStatus.includes(1);
+        if (hasLice) {
+            // Vis en alert hvis det er lus i tanken
+            alert("Det er lus i tanken!");
+        }
+
+
         const graphCombined = new Chart(graphCombinedCanvas, {
           type: 'line',
           data: {
@@ -123,11 +130,13 @@ for (let i = 0; i < 4; i++) {
           },
         });
       }
+      
     } else {
       console.log(`Document lus_status${i} does not exist.`);
     }
+
+    
   }).catch((error) => {
     console.error(`Error fetching document lus_status${i}:`, error);
   });
 }
-
