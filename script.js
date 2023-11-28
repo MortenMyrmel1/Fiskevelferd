@@ -16,7 +16,7 @@ firebase.initializeApp(firebaseConfig);
 const db = firebase.firestore();
 
 // Hent Firestore-dokumentet som inneholder array-data 
-const docRef = db.collection("Svømmehastighet").doc("fart0");
+const docRef = db.collection("Svømmemønster").doc("fart0");
 const docRef2 = db.collection("Lus_data").doc("lus_status0");
 
 // Fetch swimming pattern data
